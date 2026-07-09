@@ -1,0 +1,13 @@
+# Dependências
+node_modules/
+
+# Configuração de ferramentas locais
+.claude/
+CLAUDE.md
+
+# Sistema operacional / editores
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

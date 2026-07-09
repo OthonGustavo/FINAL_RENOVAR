@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Renovar · Pilates & Fisioterapia — Estúdio de alto padrão</title>
+  <meta name="description" content="Estúdio de Pilates e Fisioterapia: aulas de Pilates em grupo (Gympass e TotalPass), Fisioterapia Traumato-Ortopédica e Liberação Miofascial com atendimento individual." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#FE5800" />
+  <meta property="og:title" content="Renovar · Pilates & Fisioterapia" />
+  <meta property="og:description" content="Movimento que renova corpo e mente. Pilates em grupo, Fisioterapia Traumato-Ortopédica e Liberação Miofascial." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FE5800'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='36' fill='white' text-anchor='middle'%3Er%3C/text%3E%3C/svg%3E" />
+
+  <!-- Aplica o tema salvo antes da primeira pintura (evita flash) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('renovar-theme');
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* localStorage indisponível: mantém o tema claro */ }
+    })();
+  </script>
+
+  <!-- Fontes (Google Fonts — licença OFL) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Splide (carrossel — licença MIT) -->
+  <link rel="stylesheet" href="css/vendor/splide.min.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-logo">
+      <span class="preloader-mark">r</span>
+      <span class="preloader-word">renovar<i>.</i></span>
+    </div>
+  </div>
+
+  <!-- Barra de progresso de leitura -->
+  <div class="progress-bar" id="progress-bar" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="#inicio" class="logo" aria-label="Renovar — página inicial">
+        <span class="logo-mark" aria-hidden="true">r</span>
+        <span class="logo-text">
+          <strong>renovar<i>.</i></strong>
+          <small>pilates &amp; fisioterapia</small>
+        </span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+        <a href="#inicio">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#metodo">Método</a>
+        <a href="#convenios">Convênios</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.2M12 19.3v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>
+        </button>
+
+        <button class="btn btn-primary btn-sm" id="btn-auth">Entrar</button>
+
+        <div class="user-menu" id="user-menu" hidden>
+          <button class="user-chip" id="user-chip" aria-haspopup="true" aria-expanded="false">
+            <span class="avatar" id="user-avatar">A</span>
+            <span class="user-chip-name" id="user-name">Aluno</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="user-dropdown" id="user-dropdown" hidden>
+            <p class="user-dropdown-email" id="user-email"></p>
+            <hr />
+            <a href="app.html" class="user-dropdown-item">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5M5 9.5V21h14V9.5"/></svg>
+              Minha área
+            </a>
+            <button id="btn-logout" class="user-dropdown-item">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+              Sair da conta
+            </button>
+          </div>
+        </div>
+
+        <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menu mobile -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav aria-label="Menu mobile">
+      <a href="#inicio">Início</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#metodo">Método</a>
+      <a href="#convenios">Convênios</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="btn btn-primary btn-block" id="btn-auth-mobile">Entrar / Criar conta</button>
+  </div>
+
+  <main id="conteudo">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="inicio">
+      <div class="orb orb-1" aria-hidden="true"></div>
+      <div class="orb orb-2" aria-hidden="true"></div>
+      <div class="orb orb-3" aria-hidden="true"></div>
+      <div class="hero-grid-lines" aria-hidden="true"></div>
+
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow" data-hero-fade>
+            <span class="eyebrow-dot"></span>
+            Estúdio de Pilates &amp; Fisioterapia
+          </p>
+
+          <h1 class="hero-title" id="hero-title">
+            Movimento que <em>renova</em> corpo e mente.
+          </h1>
+
+          <p class="hero-sub" data-hero-fade>
+            Aulas de Pilates em grupo, Fisioterapia Traumato-Ortopédica e Liberação
+            Miofascial — com acompanhamento próximo, turmas reduzidas e um espaço
+            pensado para o seu bem-estar.
+          </p>
+
+          <div class="hero-ctas" data-hero-fade>
+            <a href="#contato" class="btn btn-primary btn-lg magnetic">
+              Agendar avaliação
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#servicos" class="btn btn-ghost btn-lg magnetic">Conhecer serviços</a>
+          </div>
+
+          <div class="hero-badges" data-hero-fade>
+            <span class="pass-pill">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              Aceitamos Gympass
+            </span>
+            <span class="pass-pill">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              Aceitamos TotalPass
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-blob">
+            <svg class="hero-figure" viewBox="0 0 400 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- silhueta abstrata de alongamento/pilates -->
+              <path class="figure-line" d="M110 460 C 140 380, 150 340, 160 290 C 168 250, 160 220, 190 190 C 220 160, 270 150, 300 110 C 318 86, 322 60, 318 40" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>
+              <circle class="figure-line" cx="322" cy="34" r="20" stroke="currentColor" stroke-width="10"/>
+              <path class="figure-line" d="M160 290 C 200 300, 250 296, 290 270 M190 190 C 160 210, 130 250, 96 260" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>
+              <path class="figure-line figure-mat" d="M40 470 H 360" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div class="rotating-badge">
+            <svg viewBox="0 0 200 200">
+              <defs>
+                <path id="circlePath" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/>
+              </defs>
+              <text>
+                <textPath href="#circlePath">renove seu movimento · pilates · fisioterapia ·&#160;</textPath>
+              </text>
+            </svg>
+            <span class="rotating-badge-center">✦</span>
+          </div>
+
+          <div class="float-card float-card-1">
+            <span class="float-card-icon">🧘</span>
+            <div>
+              <strong>Turmas reduzidas</strong>
+              <small>máx. 6 alunos por aula</small>
+            </div>
+          </div>
+          <div class="float-card float-card-2">
+            <span class="float-card-icon">★</span>
+            <div>
+              <strong>4,9 / 5,0</strong>
+              <small>avaliação dos alunos</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container hero-stats" data-hero-fade>
+        <div class="stat"><strong><span data-count="12">0</span>+</strong><span>anos de experiência</span></div>
+        <div class="stat"><strong><span data-count="900">0</span>+</strong><span>alunos atendidos</span></div>
+        <div class="stat"><strong><span data-count="40">0</span></strong><span>aulas por semana</span></div>
+        <div class="stat"><strong><span data-count="98">0</span>%</strong><span>de satisfação</span></div>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Pilates em grupo ✦ Fisioterapia Traumato-Ortopédica ✦ Liberação Miofascial ✦ Gympass ✦ TotalPass ✦&#160;</span>
+        <span>Pilates em grupo ✦ Fisioterapia Traumato-Ortopédica ✦ Liberação Miofascial ✦ Gympass ✦ TotalPass ✦&#160;</span>
+      </div>
+    </div>
+
+    <!-- ============ SOBRE ============ -->
+    <section class="section about" id="sobre">
+      <div class="container about-grid">
+        <div class="about-sticky">
+          <p class="section-eyebrow" data-reveal>O estúdio</p>
+          <h2 class="section-title" data-reveal>
+            Um espaço pensado para o seu corpo <em>inteiro</em>.
+          </h2>
+        </div>
+        <div class="about-content">
+          <p class="lead" data-reveal>
+            Na Renovar, cada pessoa é única. Unimos a precisão da fisioterapia à
+            fluidez do Pilates para construir um caminho de movimento seguro,
+            progressivo e prazeroso — seja para reabilitar uma lesão, aliviar
+            tensões ou conquistar mais força e flexibilidade.
+          </p>
+          <ul class="feature-list">
+            <li data-reveal>
+              <span class="feature-icon">✦</span>
+              <div><strong>Equipe especializada</strong><p>Fisioterapeutas e instrutores com formação completa em Pilates clássico e contemporâneo.</p></div>
+            </li>
+            <li data-reveal>
+              <span class="feature-icon">✦</span>
+              <div><strong>Turmas reduzidas</strong><p>No máximo 6 alunos por aula, garantindo correção e atenção individual.</p></div>
+            </li>
+            <li data-reveal>
+              <span class="feature-icon">✦</span>
+              <div><strong>Equipamentos completos</strong><p>Reformer, Cadillac, Chair e Barrel, além de acessórios para aulas de solo.</p></div>
+            </li>
+            <li data-reveal>
+              <span class="feature-icon">✦</span>
+              <div><strong>Avaliação individualizada</strong><p>Todo aluno passa por avaliação postural e funcional antes de começar.</p></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVIÇOS ============ -->
+    <section class="section services" id="servicos">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>Serviços</p>
+        <h2 class="section-title" data-reveal>Três caminhos, um objetivo: <em>você melhor</em>.</h2>
+
+        <div class="services-grid">
+          <!-- Fisioterapia -->
+          <article class="service-card" data-reveal>
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 7c0-2 1.8-3 4-3s4 1 4 3-1.8 3-4 3-4 1-4 3 1.8 3 4 3 4-1 4-3"/></svg>
+            </div>
+            <span class="service-tag">Atendimento individual</span>
+            <h3>Fisioterapia Traumato&#8209;Ortopédica</h3>
+            <p>
+              Reabilitação de lesões musculoesqueléticas, pós-operatório e dores
+              crônicas com plano de tratamento exclusivo para o seu caso.
+            </p>
+            <ul>
+              <li>Avaliação física completa</li>
+              <li>Plano de tratamento individual</li>
+              <li>Reavaliações periódicas de evolução</li>
+            </ul>
+            <a href="#contato" class="service-link">Agendar sessão <span aria-hidden="true">→</span></a>
+          </article>
+
+          <!-- Liberação Miofascial -->
+          <article class="service-card" data-reveal>
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12c2-4 4-6 6-6s4 2 6 6-4 6-6 6-4-2-6-6Z"/><path d="M2 12h4M18 12h4"/></svg>
+            </div>
+            <span class="service-tag">Atendimento individual</span>
+            <h3>Liberação Miofascial</h3>
+            <p>
+              Técnica manual que libera as tensões acumuladas na fáscia, devolvendo
+              mobilidade, aliviando dores e acelerando a recuperação muscular.
+            </p>
+            <ul>
+              <li>Alívio de tensões e dores</li>
+              <li>Melhora da mobilidade</li>
+              <li>Sessões individuais de 50 minutos</li>
+            </ul>
+            <a href="#contato" class="service-link">Agendar sessão <span aria-hidden="true">→</span></a>
+          </article>
+
+          <!-- Pilates -->
+          <article class="service-card service-card-featured" data-reveal>
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.4"/><path d="M4 20c2.5-5 5-7.5 8-7.5s5.5 2.5 8 7.5M12 12.5V9"/></svg>
+            </div>
+            <span class="service-tag">Aulas em grupo · até 6 alunos</span>
+            <h3>Pilates em Grupo</h3>
+            <p>
+              Aulas em equipamentos e solo para todos os níveis: força, flexibilidade,
+              postura e consciência corporal em turmas pequenas e acolhedoras.
+            </p>
+            <ul>
+              <li>Todos os níveis, do iniciante ao avançado</li>
+              <li>Horários flexíveis, manhã à noite</li>
+              <li>Check-in direto pelo app do seu benefício</li>
+            </ul>
+            <div class="service-passes">
+              <span class="pass-pill pass-pill-solid">Gympass</span>
+              <span class="pass-pill pass-pill-solid">TotalPass</span>
+            </div>
+            <a href="#contato" class="service-link">Fazer aula experimental <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MÉTODO ============ -->
+    <section class="section method" id="metodo">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>Como funciona</p>
+        <h2 class="section-title" data-reveal>Seu caminho na Renovar, <em>passo a passo</em>.</h2>
+
+        <ol class="steps">
+          <li class="step" data-reveal>
+            <span class="step-number">01</span>
+            <h3>Avaliação inicial</h3>
+            <p>Conversamos sobre seu histórico, objetivos e realizamos uma avaliação postural e funcional completa.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-number">02</span>
+            <h3>Plano personalizado</h3>
+            <p>Definimos juntos a combinação ideal: Pilates em grupo, fisioterapia, liberação miofascial — ou tudo junto.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-number">03</span>
+            <h3>Prática acompanhada</h3>
+            <p>Você treina com acompanhamento próximo dos instrutores, com correções e progressões a cada aula.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step-number">04</span>
+            <h3>Evolução medida</h3>
+            <p>Reavaliações periódicas mostram sua evolução em força, mobilidade e alívio de dores. Resultado visível.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ CONVÊNIOS ============ -->
+    <section class="section passes" id="convenios">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>Convênios</p>
+        <h2 class="section-title" data-reveal>Seu benefício corporativo <em>vale aqui</em>.</h2>
+        <p class="section-sub" data-reveal>
+          As aulas de Pilates em grupo podem ser realizadas com Gympass (Wellhub) ou
+          TotalPass. Basta fazer o check-in pelo aplicativo ao chegar no estúdio.
+        </p>
+
+        <div class="passes-grid">
+          <div class="pass-card" data-reveal>
+            <div class="pass-logo">G</div>
+            <h3>Gympass · Wellhub</h3>
+            <p>Encontre a Renovar no app, reserve seu horário e faça o check-in na recepção. Disponível para planos intermediários e superiores.</p>
+            <span class="pass-check">✓ Pilates em grupo incluído</span>
+          </div>
+          <div class="pass-card" data-reveal>
+            <div class="pass-logo">T</div>
+            <h3>TotalPass</h3>
+            <p>Apresente o app com seu token de check-in ativo na chegada. Consulte no aplicativo a categoria mínima do seu plano.</p>
+            <span class="pass-check">✓ Pilates em grupo incluído</span>
+          </div>
+        </div>
+
+        <p class="passes-note" data-reveal>
+          Fisioterapia Traumato-Ortopédica e Liberação Miofascial são atendimentos
+          individuais particulares — fale com a gente para conhecer valores e pacotes.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ DEPOIMENTOS ============ -->
+    <section class="section testimonials" id="depoimentos">
+      <div class="container">
+        <p class="section-eyebrow" data-reveal>Depoimentos</p>
+        <h2 class="section-title" data-reveal>Quem treina aqui, <em>recomenda</em>.</h2>
+      </div>
+
+      <div class="container" data-reveal>
+        <div class="splide" id="testimonials-slider" aria-label="Depoimentos de alunos">
+          <div class="splide__track">
+            <ul class="splide__list">
+              <li class="splide__slide">
+                <figure class="testimonial">
+                  <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+                  <blockquote>“Cheguei com uma hérnia de disco e muito medo de me movimentar. Hoje faço Pilates três vezes por semana e vivo sem dor. A avaliação da fisioterapia fez toda a diferença.”</blockquote>
+                  <figcaption><span class="testimonial-avatar">M</span><div><strong>Mariana S.</strong><small>aluna há 2 anos</small></div></figcaption>
+                </figure>
+              </li>
+              <li class="splide__slide">
+                <figure class="testimonial">
+                  <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+                  <blockquote>“Uso o Gympass e foi a melhor descoberta: turma pequena, professores atentos e aula que muda de verdade a cada semana. Não é aula de esteira, é atenção de estúdio.”</blockquote>
+                  <figcaption><span class="testimonial-avatar">R</span><div><strong>Rafael T.</strong><small>via Gympass</small></div></figcaption>
+                </figure>
+              </li>
+              <li class="splide__slide">
+                <figure class="testimonial">
+                  <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+                  <blockquote>“A liberação miofascial salvou minha rotina de corrida. Faço uma sessão a cada duas semanas e a diferença na recuperação é absurda.”</blockquote>
+                  <figcaption><span class="testimonial-avatar">C</span><div><strong>Camila R.</strong><small>corredora amadora</small></div></figcaption>
+                </figure>
+              </li>
+              <li class="splide__slide">
+                <figure class="testimonial">
+                  <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+                  <blockquote>“Pós-operatório de joelho tratado inteiro aqui. Saí das muletas para o Reformer com uma segurança que eu não imaginava ter de novo.”</blockquote>
+                  <figcaption><span class="testimonial-avatar">J</span><div><strong>João P.</strong><small>paciente de fisioterapia</small></div></figcaption>
+                </figure>
+              </li>
+              <li class="splide__slide">
+                <figure class="testimonial">
+                  <div class="testimonial-stars" aria-label="5 de 5 estrelas">★★★★★</div>
+                  <blockquote>“Entro pelo TotalPass e sou tratada como aluna da casa. Ambiente lindo, cheiroso e organizado — dá vontade de chegar mais cedo para a aula.”</blockquote>
+                  <figcaption><span class="testimonial-avatar">F</span><div><strong>Fernanda L.</strong><small>via TotalPass</small></div></figcaption>
+                </figure>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section faq" id="faq">
+      <div class="container faq-grid">
+        <div>
+          <p class="section-eyebrow" data-reveal>Dúvidas frequentes</p>
+          <h2 class="section-title" data-reveal>Tudo o que você precisa saber <em>antes de começar</em>.</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" data-reveal>
+            <summary>Nunca fiz Pilates. Posso começar?<span class="faq-icon" aria-hidden="true">+</span></summary>
+            <p>Sim! Todo aluno novo passa por uma avaliação e as turmas acomodam diferentes níveis. Os exercícios são adaptados individualmente, mesmo na aula em grupo.</p>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary>Como uso meu Gympass ou TotalPass?<span class="faq-icon" aria-hidden="true">+</span></summary>
+            <p>Encontre "Renovar Pilates" no app do seu benefício, reserve o horário da aula em grupo e faça o check-in pelo aplicativo ao chegar. Simples assim.</p>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary>Quantos alunos há por turma?<span class="faq-icon" aria-hidden="true">+</span></summary>
+            <p>No máximo 6 alunos por aula. Assim garantimos correção postural e atenção individual, mesmo no formato em grupo.</p>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary>A fisioterapia atende por convênio médico?<span class="faq-icon" aria-hidden="true">+</span></summary>
+            <p>Os atendimentos de Fisioterapia Traumato-Ortopédica e Liberação Miofascial são particulares. Emitimos recibo para reembolso junto ao seu plano de saúde.</p>
+          </details>
+          <details class="faq-item" data-reveal>
+            <summary>Como agendo minha avaliação?<span class="faq-icon" aria-hidden="true">+</span></summary>
+            <p>Preencha o formulário de contato aqui do site ou chame a gente no WhatsApp. Retornamos em até um dia útil com os horários disponíveis.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta-banner" data-reveal>
+      <div class="container cta-inner">
+        <h2>Pronto para <em>renovar</em> seu movimento?</h2>
+        <p>Agende uma avaliação e descubra o plano ideal para o seu corpo.</p>
+        <a href="#contato" class="btn btn-light btn-lg magnetic">Quero começar agora</a>
+      </div>
+    </section>
+
+    <!-- ============ CONTATO ============ -->
+    <section class="section contact" id="contato">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <p class="section-eyebrow" data-reveal>Contato</p>
+          <h2 class="section-title" data-reveal>Vem conhecer o <em>estúdio</em>.</h2>
+
+          <ul class="contact-list">
+            <li data-reveal>
+              <span class="contact-icon">📍</span>
+              <div><strong>Endereço</strong><p>Rua do Movimento, 128 — Jardim Paulista<br/>São Paulo · SP</p></div>
+            </li>
+            <li data-reveal>
+              <span class="contact-icon">🕐</span>
+              <div><strong>Horários</strong><p>Seg. a sex. — 6h às 21h<br/>Sábado — 8h às 12h</p></div>
+            </li>
+            <li data-reveal>
+              <span class="contact-icon">💬</span>
+              <div><strong>WhatsApp</strong><p><a href="https://wa.me/5511999990000" target="_blank" rel="noopener">(11) 99999-0000</a></p></div>
+            </li>
+            <li data-reveal>
+              <span class="contact-icon">✉️</span>
+              <div><strong>E-mail</strong><p><a href="mailto:contato@renovarpilates.com.br">contato@renovarpilates.com.br</a></p></div>
+            </li>
+          </ul>
+        </div>
+
+        <form class="contact-form" id="form-contact" data-reveal novalidate>
+          <h3>Agende sua avaliação</h3>
+          <div class="field">
+            <label for="contact-name">Nome completo</label>
+            <input type="text" id="contact-name" name="name" placeholder="Seu nome" required autocomplete="name" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="contact-email">E-mail</label>
+              <input type="email" id="contact-email" name="email" placeholder="voce@email.com" required autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="contact-phone">Telefone / WhatsApp</label>
+              <input type="tel" id="contact-phone" name="phone" placeholder="(11) 99999-0000" autocomplete="tel" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="contact-interest">Tenho interesse em</label>
+            <select id="contact-interest" name="interest" required>
+              <option value="" disabled selected>Selecione um serviço</option>
+              <option value="pilates">Pilates em grupo</option>
+              <option value="pilates-gympass">Pilates em grupo — via Gympass</option>
+              <option value="pilates-totalpass">Pilates em grupo — via TotalPass</option>
+              <option value="fisioterapia">Fisioterapia Traumato-Ortopédica</option>
+              <option value="miofascial">Liberação Miofascial</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="contact-message">Mensagem <small>(opcional)</small></label>
+            <textarea id="contact-message" name="message" rows="4" placeholder="Conte um pouco sobre seu objetivo ou sua dor..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">
+            Enviar mensagem
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </button>
+          <p class="form-hint">Retornamos em até 1 dia útil. Seus dados ficam guardados com segurança.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#inicio" class="logo">
+          <span class="logo-mark" aria-hidden="true">r</span>
+          <span class="logo-text"><strong>renovar<i>.</i></strong><small>pilates &amp; fisioterapia</small></span>
+        </a>
+        <p>Movimento que renova corpo e mente, com ciência, cuidado e acolhimento.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <a href="#servicos">Pilates em grupo</a>
+        <a href="#servicos">Fisioterapia Traumato-Ortopédica</a>
+        <a href="#servicos">Liberação Miofascial</a>
+      </div>
+      <div class="footer-col">
+        <h4>Estúdio</h4>
+        <a href="#sobre">Sobre nós</a>
+        <a href="#metodo">Como funciona</a>
+        <a href="#convenios">Gympass &amp; TotalPass</a>
+        <a href="#faq">Dúvidas frequentes</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a href="https://wa.me/5511999990000" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="mailto:contato@renovarpilates.com.br">E-mail</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span id="year">2026</span> Renovar Pilates &amp; Fisioterapia. Todos os direitos reservados.</p>
+      <p class="footer-love">Feito com <span aria-hidden="true">♥</span> e movimento.</p>
+    </div>
+  </footer>
+
+  <!-- ============ MODAL DE AUTENTICAÇÃO ============ -->
+  <div class="modal" id="auth-modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+      <button class="modal-close" data-close-modal aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+
+      <div class="modal-head">
+        <h3 id="auth-title">Área do aluno</h3>
+        <p id="auth-subtitle">Acesse sua conta ou crie um cadastro gratuito.</p>
+      </div>
+
+      <div class="auth-tabs" role="tablist" id="auth-tabs">
+        <button role="tab" id="tab-login" aria-selected="true" aria-controls="form-login">Entrar</button>
+        <button role="tab" id="tab-register" aria-selected="false" aria-controls="form-register">Criar conta</button>
+        <span class="tab-pill" aria-hidden="true"></span>
+      </div>
+
+      <!-- LOGIN -->
+      <form class="auth-form" id="form-login" novalidate>
+        <div class="field">
+          <label for="login-email">E-mail</label>
+          <input type="email" id="login-email" placeholder="voce@email.com" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="login-password">Senha</label>
+          <div class="password-wrap">
+            <input type="password" id="login-password" placeholder="Sua senha" required autocomplete="current-password" minlength="8" />
+            <button type="button" class="toggle-password" aria-label="Mostrar senha" tabindex="-1">
+              <svg class="eye-open" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-closed" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="m1 1 22 22"/></svg>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="link-forgot" id="link-forgot">Esqueci minha senha</button>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Entrar</button>
+      </form>
+
+      <!-- REGISTRO -->
+      <form class="auth-form" id="form-register" hidden novalidate>
+        <div class="field">
+          <label for="reg-name">Nome completo</label>
+          <input type="text" id="reg-name" placeholder="Seu nome" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="reg-email">E-mail</label>
+          <input type="email" id="reg-email" placeholder="voce@email.com" required autocomplete="email" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="reg-phone">Telefone <small>(opcional)</small></label>
+            <input type="tel" id="reg-phone" placeholder="(11) 99999-0000" autocomplete="tel" />
+          </div>
+          <div class="field">
+            <label for="reg-plan">Como pretende treinar?</label>
+            <select id="reg-plan" required>
+              <option value="particular" selected>Particular</option>
+              <option value="gympass">Gympass (Wellhub)</option>
+              <option value="totalpass">TotalPass</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="reg-password">Senha</label>
+          <div class="password-wrap">
+            <input type="password" id="reg-password" placeholder="Mínimo 8 caracteres" required autocomplete="new-password" minlength="8" />
+            <button type="button" class="toggle-password" aria-label="Mostrar senha" tabindex="-1">
+              <svg class="eye-open" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-closed" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="m1 1 22 22"/></svg>
+            </button>
+          </div>
+          <div class="password-strength" id="password-strength" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <p class="password-hint" id="password-hint">Use pelo menos 8 caracteres, com letras e números.</p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Criar minha conta</button>
+        <p class="form-hint">Ao criar a conta, você concorda em receber comunicações do estúdio. Seus dados ficam protegidos.</p>
+      </form>
+
+      <!-- ESQUECI A SENHA -->
+      <form class="auth-form" id="form-forgot" hidden novalidate>
+        <div class="field">
+          <label for="forgot-email">E-mail cadastrado</label>
+          <input type="email" id="forgot-email" placeholder="voce@email.com" required autocomplete="email" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Enviar link de recuperação</button>
+        <button type="button" class="link-forgot" id="link-back-login">← Voltar para o login</button>
+      </form>
+
+      <!-- SUCESSO -->
+      <div class="auth-success" id="auth-success" hidden>
+        <div class="auth-success-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <h4 id="auth-success-title">Tudo certo!</h4>
+        <p id="auth-success-message"></p>
+        <button class="btn btn-ghost" data-close-modal>Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toast-root" id="toast-root" aria-live="polite"></div>
+
+  <!-- ============ SCRIPTS ============ -->
+  <!-- Bibliotecas vendorizadas localmente (sem dependência de CDN em produção):
+       GSAP + ScrollTrigger (licença gratuita GSAP) · Lenis 1.1.14 (MIT — builds 1.2+/1.3+
+       não funcionam como script clássico) · Splide (MIT) · supabase-js (MIT) -->
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="js/vendor/lenis.min.js" defer></script>
+  <script src="js/vendor/splide.min.js" defer></script>
+  <script src="js/vendor/supabase.min.js" defer></script>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/auth.js" defer></script>
+</body>
+</html>

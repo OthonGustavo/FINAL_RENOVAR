@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Renovar · Sistema</title>
+  <meta name="robots" content="noindex" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FE5800'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-style='italic' font-size='36' fill='white' text-anchor='middle'%3Er%3C/text%3E%3C/svg%3E" />
+
+  <!-- Aplica o tema salvo antes da primeira pintura (evita flash) -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('renovar-theme');
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <!-- Tela de verificação (sessão / 2FA) -->
+  <div class="gate" id="gate">
+    <div class="gate-card">
+      <div class="gate-logo">r</div>
+      <h2>Carregando seu espaço…</h2>
+      <p>Verificando sua sessão com segurança.</p>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <a class="sidebar-logo" href="#">
+        <span class="mark">r</span>
+        <span><strong>renovar<i>.</i></strong><small>sistema interno</small></span>
+      </a>
+      <nav class="side-nav" id="side-nav" aria-label="Menu do sistema"></nav>
+    </aside>
+
+    <!-- Conteúdo -->
+    <main class="app-main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" id="btn-menu" aria-label="Abrir menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <h1 id="page-title">Renovar</h1>
+        <button class="icon-btn" id="btn-theme" aria-label="Alternar tema" title="Tema claro/escuro">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.2M12 19.3v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>
+        </button>
+        <button class="icon-btn" id="btn-copilot" aria-label="Abrir Copilot IA" title="Copilot IA">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.9 5.7L20 9.6l-5.4 3.4L16 19l-4-3.4L8 19l1.4-6L4 9.6l6.1-1.9L12 2z"/></svg>
+        </button>
+        <div class="notif-wrap">
+          <button class="icon-btn" id="btn-bell" aria-label="Notificações">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+            <span class="badge" id="notif-badge" hidden>0</span>
+          </button>
+          <div class="notif-panel" id="notif-panel" hidden>
+            <h4>Notificações</h4>
+            <div id="notif-list"></div>
+          </div>
+        </div>
+        <div class="profile-wrap">
+          <button class="avatar-btn" id="btn-profile" aria-haspopup="true" aria-expanded="false" aria-label="Menu do perfil">
+            <span class="avatar" id="top-avatar">·</span>
+          </button>
+          <div class="profile-panel" id="profile-panel" hidden>
+            <div class="profile-panel-head">
+              <span class="avatar" id="profile-avatar-lg">·</span>
+              <div style="min-width:0">
+                <strong id="profile-name">—</strong>
+                <span class="role-chip" id="profile-role" style="display:inline-block;margin:.15rem 0 .25rem">—</span>
+                <small id="profile-email" style="display:block;word-break:break-all">—</small>
+              </div>
+            </div>
+            <hr />
+            <button class="profile-item" id="pf-ver-perfil">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              Ver perfil
+            </button>
+            <button class="profile-item" id="pf-config">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.9-2.9l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2A1.7 1.7 0 0 0 4.7 8.6a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.9-2.9l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.5V2a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.9 2.9l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5 1h.2a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+              Configurações
+            </button>
+            <button class="profile-item" id="pf-trocar">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+              Trocar de conta
+            </button>
+            <hr />
+            <button class="profile-item danger" id="pf-sair">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg>
+              Sair
+            </button>
+          </div>
+        </div>
+      </header>
+      <div id="view" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <div class="toast-root" id="toast-root" aria-live="polite"></div>
+
+  <!-- Bibliotecas vendorizadas (GSAP · Chart.js MIT · supabase-js MIT) -->
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/chart.umd.min.js" defer></script>
+  <script src="js/vendor/supabase.min.js" defer></script>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/app/core.js" defer></script>
+  <script src="js/app/aluno.js" defer></script>
+  <script src="js/app/dashboard.js" defer></script>
+  <script src="js/app/projetos.js" defer></script>
+  <script src="js/app/wiki.js" defer></script>
+  <script src="js/app/atendimento.js" defer></script>
+  <script src="js/app/ia.js" defer></script>
+  <script src="js/app/admin.js" defer></script>
+</body>
+</html>
