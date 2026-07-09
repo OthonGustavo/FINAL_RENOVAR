@@ -5,7 +5,13 @@
   'use strict';
   const { sb, $, $$, esc, money, fmtDate, toast, modal, confirm: confirmDlg } = App;
 
-  const TIPO = { fisioterapia: 'Fisioterapia Traumato-Ortopédica', miofascial: 'Liberação Miofascial', avaliacao: 'Avaliação física' };
+  const TIPO = {
+    fisioterapia: 'Fisioterapia',
+    estetica: 'Estética Avançada',
+    palmilhas: 'Palmilhas Ortopédicas',
+    pilates: 'Pilates',
+    avaliacao: 'Avaliação geral',
+  };
   const ST = {
     agendada: '<span class="tag tag-brand">● Agendada</span>',
     concluida: '<span class="tag tag-ok">✓ Concluída</span>',
@@ -53,7 +59,7 @@
         <div class="card" style="margin-top:1.2rem">
           <h3>Atalhos</h3>
           <div style="display:flex;gap:.7rem;flex-wrap:wrap">
-            <a class="btn btn-primary" href="#/consultas">＋ Agendar consulta</a>
+            <a class="btn btn-primary" href="#/consultas">＋ Agendar atendimento</a>
             <a class="btn btn-ghost" href="#/planos">Ver planos</a>
             <a class="btn btn-ghost" href="#/financeiro">Meu financeiro</a>
             <a class="btn btn-ghost" href="index.html">← Voltar ao site</a>
@@ -63,8 +69,15 @@
   });
 
   /* ================= CONSULTAS (CRUD) ================= */
+  // Gera opções de horário: blocos de 60 min das 08:00 às 17:00
+  const HORARIOS = [];
+  for (let h = 8; h <= 17; h++) {
+    const hStr = String(h).padStart(2, '0');
+    HORARIOS.push(`${hStr}:00`);
+  }
+
   const consultaForm = (c = {}) => `
-    <h3>${c.id ? 'Editar consulta' : 'Agendar consulta'}</h3>
+    <h3>${c.id ? 'Editar agendamento' : 'Agendar atendimento'}</h3>
     <form id="f-consulta">
       <div class="field"><label>Tipo de atendimento</label>
         <select id="c-tipo" required>
@@ -72,7 +85,12 @@
         </select></div>
       <div class="field-row">
         <div class="field"><label>Data</label><input type="date" id="c-data" required value="${c.data || ''}" min="${new Date().toISOString().slice(0, 10)}"></div>
-        <div class="field"><label>Horário</label><input type="time" id="c-hora" required value="${c.hora ? c.hora.slice(0, 5) : ''}" min="06:00" max="21:00" step="1800"></div>
+        <div class="field"><label>Horário (blocos de 60 min · 8h–18h)</label>
+          <select id="c-hora" required>
+            <option value="" disabled ${!c.hora ? 'selected' : ''}>Selecione o horário</option>
+            ${HORARIOS.map(h => `<option value="${h}" ${c.hora && c.hora.startsWith(h) ? 'selected' : ''}>${h} – ${String(Number(h.split(':')[0]) + 1).padStart(2, '0')}:00</option>`).join('')}
+          </select>
+        </div>
       </div>
       <div class="field"><label>Observações <small>(opcional)</small></label>
         <textarea id="c-obs" rows="3" placeholder="Alguma dor, preferência ou detalhe importante?">${esc(c.observacoes || '')}</textarea></div>
@@ -98,41 +116,41 @@
         return;
       }
       m.close();
-      toast(c.id ? 'Consulta atualizada! ✓' : 'Consulta agendada! Te esperamos no estúdio. 🧡', 'success');
+      toast(c.id ? 'Agendamento atualizado! ✓' : 'Agendamento confirmado! Te esperamos na Renovar. 🧡', 'success');
       onDone();
     };
   };
 
   App.route('/consultas', {
-    title: 'Minhas consultas', roles: ['aluno'],
+    title: 'Meus agendamentos', roles: ['aluno'],
     async render(_, view) {
       const { data: rows } = await sb.from('consultas').select('*').eq('aluno_id', App.user.id).order('data', { ascending: false }).order('hora');
       view.innerHTML = `
         <div class="view-head"><div>
-          <h2>Minhas consultas</h2>
-          <p>Agende, edite ou cancele seus atendimentos individuais.</p>
-        </div><button class="btn btn-primary" id="nova">＋ Agendar consulta</button></div>
+          <h2>Meus agendamentos</h2>
+          <p>Agende, edite ou cancele seus atendimentos. Horários disponíveis: 8h–18h, blocos de 60 min.</p>
+        </div><button class="btn btn-primary" id="nova">＋ Novo agendamento</button></div>
         <div class="table-wrap"><table class="tbl">
           <thead><tr><th>Tipo</th><th>Data</th><th>Hora</th><th>Status</th><th>Observações</th><th class="num">Ações</th></tr></thead>
           <tbody>${(rows || []).map(c => `<tr>
-            <td><strong>${esc(TIPO[c.tipo])}</strong></td>
+            <td><strong>${esc(TIPO[c.tipo] || c.tipo)}</strong></td>
             <td>${fmtDate(c.data)}</td><td>${c.hora.slice(0, 5)}</td>
             <td>${ST[c.status]}</td>
             <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.observacoes) || '—'}</td>
             <td class="num">${c.status === 'agendada' ? `
               <button class="btn btn-ghost btn-sm" data-edit="${c.id}">Editar</button>
               <button class="btn btn-danger btn-sm" data-del="${c.id}">Cancelar</button>` : '—'}</td>
-          </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--text-soft);padding:2rem">Nenhuma consulta ainda. Que tal agendar a primeira?</td></tr>'}</tbody>
+          </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--text-soft);padding:2rem">Nenhum agendamento ainda. Que tal marcar o primeiro? 🧡</td></tr>'}</tbody>
         </table></div>`;
 
       const reload = () => this.render(_, view);
       view.querySelector('#nova').onclick = () => openConsulta({}, reload);
       $$('[data-edit]', view).forEach(b => b.onclick = () => openConsulta(rows.find(c => c.id === b.dataset.edit), reload));
       $$('[data-del]', view).forEach(b => b.onclick = async () => {
-        if (!await confirmDlg('Cancelar esta consulta? O horário será liberado para outros alunos.')) return;
+        if (!await confirmDlg('Cancelar este agendamento? O horário será liberado para outros pacientes.')) return;
         const { error } = await sb.from('consultas').update({ status: 'cancelada' }).eq('id', b.dataset.del);
         if (error) return toast('Não foi possível cancelar.', 'error');
-        toast('Consulta cancelada.', 'success');
+        toast('Agendamento cancelado.', 'success');
         reload();
       });
     },
