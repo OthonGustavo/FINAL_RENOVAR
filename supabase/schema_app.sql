@@ -85,7 +85,7 @@ create policy "assinaturas_staff" on public.assinaturas
 create table if not exists public.consultas (
   id uuid primary key default gen_random_uuid(),
   aluno_id uuid not null references public.profiles (id) on delete cascade,
-  tipo text not null check (tipo in ('fisioterapia','miofascial','avaliacao')),
+  tipo text not null check (tipo in ('fisioterapia','estetica','palmilhas','pilates','avaliacao')),
   data date not null,
   hora time not null,
   status text not null default 'agendada' check (status in ('agendada','concluida','cancelada')),

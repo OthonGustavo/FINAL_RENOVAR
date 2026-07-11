@@ -95,8 +95,7 @@ create table if not exists public.contact_messages (
   email      text not null check (char_length(email) between 5 and 160),
   phone      text check (phone is null or char_length(phone) <= 30),
   interest   text not null check (interest in (
-               'pilates', 'pilates-gympass', 'pilates-totalpass',
-               'fisioterapia', 'miofascial')),
+               'fisioterapia', 'estetica', 'palmilhas', 'pilates', 'avaliacao')),
   message    text check (message is null or char_length(message) <= 2000),
   created_at timestamptz not null default now()
 );

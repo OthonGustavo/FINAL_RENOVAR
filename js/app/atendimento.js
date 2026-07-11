@@ -201,18 +201,13 @@
         if (usar) usar.onclick = () => { $('#hd-texto', view).value = sugestao; m.close(); $('#hd-texto', view).focus(); };
       };
 
-      /* encerrar + NPS automático via WhatsApp */
+      /* encerrar + envio da pesquisa NPS ao cliente */
       const fechar = $('#hd-fechar', view);
       if (fechar) fechar.onclick = async () => {
         await sb.from('tickets').update({ status: 'resolvido', encerrado_em: new Date().toISOString() }).eq('id', id);
-        await sb.from('ticket_mensagens').insert({ ticket_id: id, origem: 'sistema', texto: '✅ Chamado encerrado. Pesquisa de satisfação (NPS) enviada automaticamente via WhatsApp.' });
-        toast('Chamado encerrado — pesquisa NPS enviada via WhatsApp. 📲', 'success');
-        // o cliente responde a pesquisa e a nota chega de volta
-        setTimeout(async () => {
-          const nota = 8 + Math.floor(Math.random() * 3);
-          await sb.from('tickets').update({ nps: nota }).eq('id', id);
-          await sb.from('ticket_mensagens').insert({ ticket_id: id, origem: 'sistema', texto: `📊 Cliente respondeu a pesquisa NPS: ${nota}/10.` });
-        }, 4000);
+        await sb.from('ticket_mensagens').insert({ ticket_id: id, origem: 'sistema', texto: '✅ Chamado encerrado. Pesquisa de satisfação (NPS) enviada ao cliente via WhatsApp.' });
+        toast('Chamado encerrado — pesquisa NPS enviada ao cliente. 📲', 'success');
+        // a nota do NPS é preenchida quando o cliente responde de fato à pesquisa
         reload();
       };
 
