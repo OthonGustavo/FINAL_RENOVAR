@@ -9,11 +9,18 @@
   const CATS = ['RH', 'Vendas', 'Suporte', 'Geral'];
 
   /* ---------- mini-markdown -> HTML (com YouTube e downloads) ---------- */
-  const ytId = (url) => (url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|vimeo\.com\/)([\w-]+)/) || [])[1];
+  // Só aceita protocolos seguros; bloqueia javascript:, data:, vbscript: etc.
+  // (a URL já vem HTML-escapada por esc(); aqui validamos o esquema)
+  const safeUrl = (url, { img = false } = {}) => {
+    const raw = url.replace(/&amp;/g, '&').trim();
+    if (/^(https?:)?\/\//i.test(raw) || raw.startsWith('/')) return url;
+    if (!img && /^mailto:/i.test(raw)) return url;
+    return '#';
+  };
   const inline = (s) => s
-    .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, '<img src="$2" alt="$1" loading="lazy">')
-    .replace(/\[([^\]]+)\]\(([^)\s]+\.(?:pdf|docx?|xlsx?|pptx?|zip|rar))\)/gi, '<a class="file-dl" href="$2" target="_blank" rel="noopener" download>⬇ $1</a>')
-    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (_, alt, src) => `<img src="${safeUrl(src, { img: true })}" alt="${alt}" loading="lazy">`)
+    .replace(/\[([^\]]+)\]\(([^)\s]+\.(?:pdf|docx?|xlsx?|pptx?|zip|rar))\)/gi, (_, txt, href) => `<a class="file-dl" href="${safeUrl(href)}" target="_blank" rel="noopener noreferrer" download>⬇ ${txt}</a>`)
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, txt, href) => `<a href="${safeUrl(href)}" target="_blank" rel="noopener noreferrer">${txt}</a>`)
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/`([^`]+)`/g, '<code>$1</code>');

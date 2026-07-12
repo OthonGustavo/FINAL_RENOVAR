@@ -174,6 +174,33 @@ create trigger fin_registrar_pagamento
   before update on public.financeiro_aluno
   for each row execute function public.registrar_pagamento();
 
+-- aluno só pode marcar a própria cobrança como paga; valor/descrição/vencimento imutáveis
+-- (impede forjar o valor que o trigger acima lança no fluxo de caixa)
+create or replace function public.guard_financeiro_aluno()
+returns trigger language plpgsql security definer set search_path = public
+as $$
+begin
+  if auth.uid() is null or public.is_staff() then
+    return new;
+  end if;
+  if new.aluno_id   is distinct from old.aluno_id
+     or new.descricao  is distinct from old.descricao
+     or new.valor      is distinct from old.valor
+     or new.vencimento is distinct from old.vencimento then
+    raise exception 'alteracao de campos da cobranca nao permitida';
+  end if;
+  if old.status = 'pago' and new.status <> 'pago' then
+    raise exception 'cobranca ja paga nao pode ser revertida';
+  end if;
+  return new;
+end $$;
+
+-- fin_guard (antes de fin_registrar_pagamento na ordem alfabética) valida antes da baixa
+drop trigger if exists fin_guard on public.financeiro_aluno;
+create trigger fin_guard
+  before update on public.financeiro_aluno
+  for each row execute function public.guard_financeiro_aluno();
+
 create table if not exists public.produtos (
   id uuid primary key default gen_random_uuid(),
   nome text not null,
@@ -343,9 +370,11 @@ create policy "notif_update_own" on public.notificacoes
 drop policy if exists "notif_delete_own" on public.notificacoes;
 create policy "notif_delete_own" on public.notificacoes
   for delete using (usuario_id = auth.uid());
+-- só a equipe cria notificações (evita spoofing/spam entre usuários autenticados)
 drop policy if exists "notif_insert_auth" on public.notificacoes;
-create policy "notif_insert_auth" on public.notificacoes
-  for insert with check (auth.uid() is not null);
+drop policy if exists "notif_insert_staff" on public.notificacoes;
+create policy "notif_insert_staff" on public.notificacoes
+  for insert to authenticated with check (public.is_staff());
 
 -- publica tabelas no Realtime (ignora se já publicadas)
 do $$
